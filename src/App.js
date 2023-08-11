@@ -10,14 +10,9 @@ function App() {
     <BrowserRouter>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand>Car Manager</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Cars</Nav.Link>
-              <Nav.Link as={Link} to="/create">New Car</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+          <Navbar.Brand>
+            Car Manager
+          </Navbar.Brand>
         </Container>
       </Navbar>
       <Container>

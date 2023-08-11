@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const setCurrency = (value) => {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
@@ -23,7 +24,9 @@ const CarList = () => {
     <div>
       <div className="d-flex align-items-center flex-column">
         <h3>List of Cars</h3>
-        <Button className="px-4" variant="primary">Add</Button>
+        <Link to="/create">
+          <Button className="px-4" variant="primary">Add</Button>  
+        </Link>
       </div>
 
       <div className="mt-4">
