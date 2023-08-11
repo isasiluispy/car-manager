@@ -24,6 +24,10 @@ const CarCreate = () => {
   const [productionCost, setProductionCost] = useState('');
   const [transportationCost, setTransportationCost] = useState('');
 
+  const allFieldsFilled = () => {
+    return model && brand && mainColor && value && productionCost && transportationCost;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -60,6 +64,7 @@ const CarCreate = () => {
               placeholder="Enter model" 
               value={model}
               onChange={(e) => setModel(e.target.value)} 
+              required
             />
           </Form.Group>
 
@@ -68,7 +73,9 @@ const CarCreate = () => {
             <Form.Select 
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
+              required
             >
+              <option value="">Select a brand</option>
               {brands.map((brand, index) => (
                 <option key={index} value={brand.value}>{brand.label}</option>
               ))}
@@ -80,7 +87,9 @@ const CarCreate = () => {
             <Form.Select 
               value={mainColor}
               onChange={(e) => setMainColor(e.target.value)}
+              required
             >
+              <option value="">Select a color</option>
               {mainColors.map((color, index) => (
                 <option key={index} value={color.value}>{color.label}</option>
               ))}
@@ -94,6 +103,7 @@ const CarCreate = () => {
               placeholder="Enter value" 
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              required
             />
           </Form.Group>
 
@@ -104,6 +114,7 @@ const CarCreate = () => {
               placeholder="Enter production cost" 
               value={productionCost}
               onChange={(e) => setProductionCost(e.target.value)}
+              required
             />
           </Form.Group>
 
@@ -114,11 +125,12 @@ const CarCreate = () => {
               placeholder="Enter transportation cost" 
               value={transportationCost}
               onChange={(e) => setTransportationCost(e.target.value)}
+              required
             />
           </Form.Group>
 
           <div className="d-flex align-items-center flex-column">
-            <Button className="px-5" variant="primary" type="submit">
+            <Button className="px-5" variant="primary" type="submit" disabled={!allFieldsFilled()}>
               Save
             </Button>
           </div>
