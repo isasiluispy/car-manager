@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import { BrowserRouter, Route, Link, Routes as Switch } from 'react-router-dom';
+import CarList from './pages/cars/carList';
+import CarDetail from './pages/cars/carDetail';
+import CarCreate from './pages/cars/carCreate';
 
 function App() {
+  const [cars, setCars] = useState([]);
+  const [selectedCar, setSelectedCar] = useState(null);
+
+  const addCar = (car) => {
+    const newCar = { id: Date.now(), ...car };
+    setCars([...cars, newCar]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar bg="light" expand="lg">
+        <Container>
+          <Navbar.Brand>Car Manager</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link as={Link} to="/">Cars</Nav.Link>
+              <Nav.Link as={Link} to="/create">New Car</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Container>
+        <Switch>
+          <Route exact path="/" element={<CarList />} />
+          <Route path="/car/:id" element={<CarDetail />} />
+          <Route path="/create" element={<CarCreate />} />
+        </Switch>
+      </Container>
+    </BrowserRouter>
   );
 }
 
