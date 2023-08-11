@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
-import { BrowserRouter, Route, Link, Routes as Switch } from 'react-router-dom';
-import CarList from './pages/cars/carList';
-import CarCreate from './pages/cars/carCreate';
+import React from 'react';
+import { Container, Navbar } from 'react-bootstrap';
+import Routes from './routes';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar bg="light" expand="lg">
         <Container>
           <Navbar.Brand>
@@ -15,12 +13,9 @@ function App() {
         </Container>
       </Navbar>
       <Container>
-        <Switch>
-          <Route exact path="/" element={<CarList />} />
-          <Route path="/create" element={<CarCreate />} />
-        </Switch>
+        {Routes}
       </Container>
-    </BrowserRouter>
+    </>
   );
 }
 
