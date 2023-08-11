@@ -1,19 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { brands, mainColors } from '../../constants';
 
-const brands = [
-  { value: 'Tesla', label: 'Tesla' },
-  { value: 'Ford', label: 'Ford' },
-  { value: 'Toyota', label: 'Toyota' },
-];
-
-const mainColors = [
-  { value: 'Red', label: 'Red' },
-  { value: 'Blue', label: 'Blue' },
-  { value: 'White', label: 'White' },
-  { value: 'Black', label: 'Black' },
-];
 
 const CarCreate = () => {
   const navigate = useNavigate();
