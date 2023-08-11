@@ -13,6 +13,19 @@ const CarCreate = () => {
   const [productionCost, setProductionCost] = useState('');
   const [transportationCost, setTransportationCost] = useState('');
 
+  const [touchedFields, setTouchedFields] = useState({
+    model: false,
+    brand: false,
+    mainColor: false,
+    value: false,
+    productionCost: false,
+    transportationCost: false,
+  });
+
+  const handleBlur = (field) => {
+    setTouchedFields((prev) => ({ ...prev, [field]: true }));
+  };
+
   const allFieldsFilled = () => {
     return model && brand && mainColor && value && productionCost && transportationCost;
   };
@@ -53,8 +66,13 @@ const CarCreate = () => {
               placeholder="Enter model" 
               value={model}
               onChange={(e) => setModel(e.target.value)} 
+              onBlur={() => handleBlur('model')}
+              isInvalid={!model && touchedFields.model}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a model.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -62,6 +80,8 @@ const CarCreate = () => {
             <Form.Select 
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
+              onBlur={() => handleBlur('brand')}
+              isInvalid={!brand && touchedFields.brand}
               required
             >
               <option value="">Select a brand</option>
@@ -69,6 +89,9 @@ const CarCreate = () => {
                 <option key={index} value={brand.value}>{brand.label}</option>
               ))}
             </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              Please select a brand.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -76,6 +99,8 @@ const CarCreate = () => {
             <Form.Select 
               value={mainColor}
               onChange={(e) => setMainColor(e.target.value)}
+              onBlur={() => handleBlur('mainColor')}
+              isInvalid={!mainColor && touchedFields.mainColor}
               required
             >
               <option value="">Select a color</option>
@@ -83,6 +108,9 @@ const CarCreate = () => {
                 <option key={index} value={color.value}>{color.label}</option>
               ))}
             </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              Please select a color.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -92,8 +120,13 @@ const CarCreate = () => {
               placeholder="Enter value" 
               value={value}
               onChange={(e) => setValue(e.target.value)}
+              onBlur={() => handleBlur('value')}
+              isInvalid={!value && touchedFields.value}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a value.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -103,8 +136,13 @@ const CarCreate = () => {
               placeholder="Enter production cost" 
               value={productionCost}
               onChange={(e) => setProductionCost(e.target.value)}
+              onBlur={() => handleBlur('productionCost')}
+              isInvalid={!productionCost && touchedFields.productionCost}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a production cost.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -114,8 +152,13 @@ const CarCreate = () => {
               placeholder="Enter transportation cost" 
               value={transportationCost}
               onChange={(e) => setTransportationCost(e.target.value)}
+              onBlur={() => handleBlur('transportationCost')}
+              isInvalid={!transportationCost && touchedFields.transportationCost}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Please enter a transportation cost.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <div className="d-flex align-items-center flex-column">
