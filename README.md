@@ -1,5 +1,9 @@
 # Car Manager
-Web app to manage cars
+Web app to manage cars, it uses
+- React
+- LocalStorage to store changes done on cars
+- Bootstrap CSS
+- React Testing library
 
 ## Available Scripts
 
