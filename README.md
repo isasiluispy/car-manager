@@ -5,6 +5,8 @@ Web app to manage cars, it uses
 - Bootstrap CSS
 - React Testing library
 
+Keep in mind that this has been created using node v18.16.0
+
 ## Available Scripts
 
 In the project directory, you can run:
