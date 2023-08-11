@@ -6,14 +6,6 @@ import CarDetail from './pages/cars/carDetail';
 import CarCreate from './pages/cars/carCreate';
 
 function App() {
-  const [cars, setCars] = useState([]);
-  const [selectedCar, setSelectedCar] = useState(null);
-
-  const addCar = (car) => {
-    const newCar = { id: Date.now(), ...car };
-    setCars([...cars, newCar]);
-  }
-
   return (
     <BrowserRouter>
       <Navbar bg="light" expand="lg">
