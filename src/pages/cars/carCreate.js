@@ -91,7 +91,7 @@ const CarCreate = () => {
       </div>
 
       <div className="mt-4">
-        <Form className="mt-4" onSubmit={handleSubmit}>
+        <Form className="mt-4" onSubmit={handleSubmit} role="form">
           <FormControlGroup 
             label="Model" 
             type="text" 
