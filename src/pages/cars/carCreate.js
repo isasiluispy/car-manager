@@ -3,6 +3,38 @@ import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { brands, mainColors } from '../../constants';
 
+const FormControlGroup = ({ label, type, value, onChange, onBlur, placeholder, field, options }) => (
+  <Form.Group className="mb-3">
+    <Form.Label>{label}</Form.Label>
+    {type === "select" ? (
+      <Form.Select 
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        isInvalid={!value && field}
+        required
+      >
+        <option value="">{placeholder}</option>
+        {options && options.map((option) => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+        ))}
+      </Form.Select>
+    ) : (
+      <Form.Control 
+        type={type} 
+        placeholder={placeholder} 
+        value={value}
+        onChange={onChange} 
+        onBlur={onBlur}
+        isInvalid={!value && field}
+        required
+      />
+    )}
+    <Form.Control.Feedback type="invalid">
+      Please enter {label.toLowerCase()}.
+    </Form.Control.Feedback>
+  </Form.Group>
+);
 
 const CarCreate = () => {
   const navigate = useNavigate();
@@ -12,6 +44,7 @@ const CarCreate = () => {
   const [value, setValue] = useState('');
   const [productionCost, setProductionCost] = useState('');
   const [transportationCost, setTransportationCost] = useState('');
+  const toNumber = value => Number(value);
 
   const [touchedFields, setTouchedFields] = useState({
     model: false,
@@ -37,9 +70,9 @@ const CarCreate = () => {
       model,
       brand,
       mainColor,
-      value: Number(value),
-      productionCost: Number(productionCost),
-      transportationCosts: Number(transportationCost),
+      value: toNumber(value),
+      productionCost: toNumber(productionCost),
+      transportationCosts: toNumber(transportationCost),
     };
 
     // append new car to existing cars in localStorage
@@ -59,107 +92,67 @@ const CarCreate = () => {
 
       <div className="mt-4">
         <Form className="mt-4" onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Model</Form.Label>
-            <Form.Control 
-              type="text" 
-              placeholder="Enter model" 
-              value={model}
-              onChange={(e) => setModel(e.target.value)} 
-              onBlur={() => handleBlur('model')}
-              isInvalid={!model && touchedFields.model}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a model.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <FormControlGroup 
+            label="Model" 
+            type="text" 
+            value={model} 
+            onChange={(e) => setModel(e.target.value)} 
+            onBlur={() => handleBlur('model')} 
+            placeholder="Enter model" 
+            field={touchedFields.model}
+          />
+          
+          <FormControlGroup 
+            label="Brand" 
+            type="select" 
+            value={brand} 
+            onChange={(e) => setBrand(e.target.value)} 
+            onBlur={() => handleBlur('brand')} 
+            placeholder="Select a brand" 
+            field={touchedFields.brand}
+            options={brands}
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Brand</Form.Label>
-            <Form.Select 
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              onBlur={() => handleBlur('brand')}
-              isInvalid={!brand && touchedFields.brand}
-              required
-            >
-              <option value="">Select a brand</option>
-              {brands.map((brand, index) => (
-                <option key={index} value={brand.value}>{brand.label}</option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              Please select a brand.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <FormControlGroup 
+            label="Main Color" 
+            type="select" 
+            value={mainColor} 
+            onChange={(e) => setMainColor(e.target.value)} 
+            onBlur={() => handleBlur('mainColor')} 
+            placeholder="Select a color" 
+            field={touchedFields.mainColor}
+            options={mainColors}
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Main Color</Form.Label>
-            <Form.Select 
-              value={mainColor}
-              onChange={(e) => setMainColor(e.target.value)}
-              onBlur={() => handleBlur('mainColor')}
-              isInvalid={!mainColor && touchedFields.mainColor}
-              required
-            >
-              <option value="">Select a color</option>
-              {mainColors.map((color, index) => (
-                <option key={index} value={color.value}>{color.label}</option>
-              ))}
-            </Form.Select>
-            <Form.Control.Feedback type="invalid">
-              Please select a color.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <FormControlGroup 
+            label="Value" 
+            type="number" 
+            value={value} 
+            onChange={(e) => setValue(e.target.value)} 
+            onBlur={() => handleBlur('value')} 
+            placeholder="Enter value" 
+            field={touchedFields.value}
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Value</Form.Label>
-            <Form.Control 
-              type="number" 
-              placeholder="Enter value" 
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              onBlur={() => handleBlur('value')}
-              isInvalid={!value && touchedFields.value}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a value.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <FormControlGroup 
+            label="Production Cost" 
+            type="number" 
+            value={productionCost} 
+            onChange={(e) => setProductionCost(e.target.value)} 
+            onBlur={() => handleBlur('productionCost')} 
+            placeholder="Enter production cost" 
+            field={touchedFields.productionCost}
+          />
 
-          <Form.Group className="mb-3">
-            <Form.Label>Production Cost</Form.Label>
-            <Form.Control 
-              type="number" 
-              placeholder="Enter production cost" 
-              value={productionCost}
-              onChange={(e) => setProductionCost(e.target.value)}
-              onBlur={() => handleBlur('productionCost')}
-              isInvalid={!productionCost && touchedFields.productionCost}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a production cost.
-            </Form.Control.Feedback>
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Transportation Cost</Form.Label>
-            <Form.Control 
-              type="number" 
-              placeholder="Enter transportation cost" 
-              value={transportationCost}
-              onChange={(e) => setTransportationCost(e.target.value)}
-              onBlur={() => handleBlur('transportationCost')}
-              isInvalid={!transportationCost && touchedFields.transportationCost}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a transportation cost.
-            </Form.Control.Feedback>
-          </Form.Group>
+          <FormControlGroup 
+            label="Transportation Cost" 
+            type="number" 
+            value={transportationCost} 
+            onChange={(e) => setTransportationCost(e.target.value)} 
+            onBlur={() => handleBlur('transportationCost')} 
+            placeholder="Enter transportation cost" 
+            field={touchedFields.transportationCost}
+          />
 
           <div className="d-flex align-items-center flex-column">
             <Button className="px-5" variant="primary" type="submit" disabled={!allFieldsFilled()}>
